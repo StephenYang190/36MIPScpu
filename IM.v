@@ -6,7 +6,7 @@ module IM(addr, out);
   reg [31:0] im[1023:0];
 
   initial begin
-    $readmemh("C:/Users/97927/OneDrive - nuaa.edu.cn/Desktop/computerExercise/cpu/code.txt", im);
+    $readmemh("F:/code_personal/computer/mars/code.txt", im);
   end
 
   assign out = im[addr[11:2]];

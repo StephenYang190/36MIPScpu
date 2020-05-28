@@ -16,10 +16,13 @@ module registers(RegWr, Rw, Ra, Rb, busW, busA, busB, clk);
 
   always@(negedge clk)
   begin
-    busA = regi[Ra];
-    busB = regi[Rb];
     if (RegWr == 1)
       regi[Rw] <= busW;
+  end
+
+  always @ (Ra or Rb) begin
+    busA = regi[Ra];
+    busB = regi[Rb];
   end
 
 endmodule

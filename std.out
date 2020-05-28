@@ -1,0 +1,3 @@
+ERROR - F:\creo\Creo 5.0.4.0\Common Files\text\config.pro, linenum 5 :  Keyword 'ALLOW_SAVE_FAILED_MODELS' is not valid.
+ERROR - F:\creo\Creo 5.0.4.0\Common Files\text\config.pro, linenum 11:  Keyword 'SYSTEM_BACKGROUND_COLOR' is not valid.
+ERROR - F:\creo\Creo 5.0.4.0\Common Files\text\config.pro, linenum 227: Invalid value 'shading_low' for keyword 'SAVE_MODEL_DISPLAY'.
