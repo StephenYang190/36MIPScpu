@@ -12,10 +12,10 @@ module Ext(Extop, x, y);
     if (Extop == 0)
       y = ZERO + x;
     else
-      if (x[0] == 0)
-      y = ZERO + x;
+      if (x[15] == 0)
+        y = ZERO + x;
       else
-      y = ONE + x;
+        y = ONE + x;
   end
 
 endmodule

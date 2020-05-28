@@ -1,6 +1,7 @@
-module ALU(A, B, y, zero, ovflow, aluctr);
+module ALU(A, B, shft, y, zero, ovflow, aluctr);
 input[31:0] A, B;
 input [4:0] aluctr;
+input [4:0] shft;
 
 output[31:0] y;
 output zero, ovflow;
@@ -23,10 +24,14 @@ always@ (*) begin
   5'b00100 : y = ~(A | B);
   5'b00101 : y = A | B;
   5'b00110 : y = A ^ B;
-  5'b00111 : y = A << B;
+  5'b00111 : y = B << shft;
   5'b01000 : y = (A < B)?1:0;
-  5'b01001 : y = A >>> B;
-  5'b01010 : y = A >> B;
+  5'b01001 : y = B >>> shft;
+  5'b01010 : y = B >> shft;
+  5'b10000 : y = (sign_a >= 0)?0:1;
+  5'b10001 : y = (sign_a > 0)?0:1;
+  5'b10010 : y = (sign_a <= 0)?0:1;
+  5'b10011 : y = (sign_a < 0)?0:1;
   default : y = 32'b0;
   endcase
 

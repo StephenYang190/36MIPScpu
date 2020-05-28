@@ -1,7 +1,7 @@
 module datapath();
   //wire parameter
   wire [31:0] ins;
-  wire [4:0] Rd, Rt, Rs, Rw, aluctr;
+  wire [4:0] Rd, Rt, Rs, Rw, aluctr, shft;
   wire [31:0] busW, busA, busB, aluout, tomux2_1, aluin, menout;
   wire [15:0] imm16;
   wire B, J, Z, O, RegDst, RegWr, MenWr, MentoReg, ALUSrc, Extop;
@@ -34,7 +34,7 @@ module datapath();
   DM dm(MenWr, aluout, busB, menout, ins[31:26], clk);
 
   //ALU
-  ALU alu(busA, aluin, aluout, Z, O, aluctr);
+  ALU alu(busA, aluin, shft, aluout, Z, O, aluctr);
 
   //control
   control con(ins[31:26], ins[5:0], B, J, RegDst, RegWr, MenWr, MentoReg, ALUSrc, Extop, aluctr);
@@ -43,11 +43,6 @@ module datapath();
   assign Rt = ins[20:16];
   assign Rd = ins[15:11];
   assign imm16 = ins[15:0];
-
-  initial
-begin
-    $dumpfile("wave.vcd");        //生成的vcd文件名称
-    $dumpvars(0, datapath);    //tb模块名称
-end
+  assign shft = ins[10:6];
 
 endmodule

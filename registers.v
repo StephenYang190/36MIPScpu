@@ -6,7 +6,7 @@ module registers(RegWr, Rw, Ra, Rb, busW, busA, busB, clk);
   output [31:0] busA, busB;
 
   reg [31:0] regi[31:0];
-  reg [31:0] busA, busB;
+  wire [31:0] busA, busB;
 
   integer i;
 
@@ -20,9 +20,7 @@ module registers(RegWr, Rw, Ra, Rb, busW, busA, busB, clk);
       regi[Rw] <= busW;
   end
 
-  always @ (Ra or Rb) begin
-    busA = regi[Ra];
-    busB = regi[Rb];
-  end
+  assign busA = regi[Ra];
+  assign busB = regi[Rb];
 
 endmodule

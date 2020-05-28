@@ -12,7 +12,7 @@ module InstructionFU(B, J, Z, imme, ins, clk);
 
   //wire parameter
   wire [29:0] topc, toadd1_0, tomux1_0, tomux2_0, tomux1_1, tomux2_1;
-  wire [31:0] toadd2_1;
+  wire [29:0] toadd2_1;
   wire [25:0] target;
   parameter ONE = 30'b1;
 
@@ -37,10 +37,10 @@ module InstructionFU(B, J, Z, imme, ins, clk);
 
   //add address
   Adder add1(toadd1_0, ONE, tomux1_0);
-  Adder add2(tomux1_0, toadd2_1[31:2], tomux1_1);
+  Adder add2(tomux1_0, toadd2_1, tomux1_1);
 
   //signext
-  Ext signext(1, imme, toadd2_1);
+  Ext30 signext(1, imme, toadd2_1);
 
   //instruction memery
   IM im({toadd1_0, 2'b00}, ins);
