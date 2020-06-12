@@ -1,6 +1,7 @@
-module mainControl(op, B, J, RegDst, RegWr, MenWr, MentoReg, ALUSrc, Extop, ALUop, r);
+module mainControl(op, select, B, J, RegDst, RegWr, MenWr, MentoReg, ALUSrc, Extop, ALUop, r);
 
   input [5:0] op;
+  input [4:0] select;
 
   output B, J, RegDst, RegWr, MenWr, MentoReg, ALUSrc, Extop, r;
   output [4:0] ALUop;
@@ -8,6 +9,7 @@ module mainControl(op, B, J, RegDst, RegWr, MenWr, MentoReg, ALUSrc, Extop, ALUo
   reg [4:0] ALUop;
 
   assign Extop = (!op[5]&&!op[4]&&op[3]&&!op[2]&&!op[1]&&op[0])||
+  (!op[5]&&!op[4]&&op[3]&&!op[2]&&op[1]&&op[0])||
   (!op[5]&&!op[4]&&op[3]&&!op[2]&&op[1]&&!op[0])||
   (op[5]&&!op[4]&&!op[3]&&!op[1]&&!op[0])||
   (op[5]&&!op[4]&&op[3]&&!op[2]&&!op[1]&&!op[0])||
@@ -52,17 +54,16 @@ module mainControl(op, B, J, RegDst, RegWr, MenWr, MentoReg, ALUSrc, Extop, ALUo
     6'b000000 : ALUop = 5'b11111; //R type
     6'b001001 : ALUop = 5'b00000;	//ADDIU
     6'b000100 : ALUop = 5'b00001;	//BEQ
-    6'b000101 : ALUop = 5'b00001;	//BNE
+    6'b000101 : ALUop = 5'b10110;	//BNE
     6'b100011 : ALUop = 5'b00000;	//LW
     6'b101011 : ALUop = 5'b00000;	//SW
-    6'b001111 :	ALUop = 5'b01010; //LUI
+    6'b001111 :	ALUop = 5'b10100; //LUI
     6'b000010 :	ALUop = 5'b11111; //J
     6'b001010 :	ALUop = 5'b00010; //SLTI
     6'b001011 :	ALUop = 5'b01000; //SLTIU
-    6'b000001 :	ALUop = 5'b10000; //BGEZ
+    6'b000001 :	ALUop = (select == 1)?5'b10000:5'b10011; //BGEZ|BLTZ
     6'b000111 :	ALUop = 5'b10001; //BGTZ
     6'b000110 :	ALUop = 5'b10010; //BLEZ
-    6'b000001 :	ALUop = 5'b10011; //BLTZ
     6'b100000 :	ALUop = 5'b00000; //LB
     6'b100100 :	ALUop = 5'b00000; //LBU
     6'b101000 :	ALUop = 5'b00000; //SB
